@@ -67,11 +67,23 @@ namespace test_vooban.Controllers
 
         public ActionResult downloadFile()
         {
+            FileContentResult toDownload;
             string filePath = Server.MapPath("~") + @"\sortedNames.txt";
+
             if (System.IO.File.Exists(filePath))
             {
-                return GetDocument(filePath);
+                toDownload = new FileContentResult(System.IO.File.ReadAllBytes(filePath), "application/msword")
+                {
+                    FileDownloadName = Path.GetFileName(filePath)
+                };
+                return toDownload;
             }
+            else
+            {
+                TempData["downloadError"] = "Le fichier doit être traité avant d'être téléchargé";
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

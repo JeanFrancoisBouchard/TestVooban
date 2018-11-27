@@ -16,9 +16,9 @@
                 }
                 <br />
                 <p>@TempData["FirstMessage"]</p>
-                <p>@TempData["Download"]</p>
+                <p>@TempData["downloadError"]</p>
                 <br />
-                <a href="@Url.Action("TelechargerDocument", "Etudiant")" class="col-8">Télécharger le fichier</a>
+                <a href="@Url.Action("downloadFile", "Home")" class="col-8">Télécharger le dernier fichier traité</a>
             </div>
         </div>
     </div>
