@@ -1,8 +1,47 @@
-﻿<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
+﻿<div class="col-md-6">
+    <div class="card">
+        <h3 class="card-header">Challenge 1</h3>
+        <div class="card-body">
+            <div class="container">
+                @using (Html.BeginForm("countNamesWithAtLeastTwoVowels", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken();
+                    <label for="fileInput">
+                        Sélectionner un fichier texte :
+                    </label>
+                    <br />
+                    <input type="file" name="fileInput" accept=".txt" />
+                    <br />
+                    <input type="submit" value="Trier" class="form-control" />
+                }
+                <br />
+                <p>@TempData["FirstMessage"]</p>
+                <p>@TempData["Download"]</p>
+                <br />
+                <a href="@Url.Action("TelechargerDocument", "Etudiant")" class="col-8">Télécharger le fichier</a>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
+</div>
+<div class="col-md-6">
+    <div class="card">
+        <h3 class="card-header">Challenge 2</h3>
+        <div class="card-body">
+            <div class="container">
+                @using (Html.BeginForm("calculateScore", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken();
+                    <label for="fileInput">
+                        Sélectionner un fichier texte :
+                    </label>
+                    <br />
+                    <input type="file" name="fileInput" accept=".txt" class="" />
+                    <br />
+                    <input type="submit" value="Calculer score" class="form-control" />
+                }
+                <br />
+                <p>@TempData["SecondMessage"]</p>
+            </div>
+        </div>
     </div>
 </div>
