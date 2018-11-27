@@ -1,47 +1,52 @@
-﻿<div class="col-md-6">
-    <div class="card">
-        <h3 class="card-header">Challenge 1</h3>
-        <div class="card-body">
-            <div class="container">
-                @using (Html.BeginForm("countNamesWithAtLeastTwoVowels", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken();
-                    <label for="fileInput">
-                        Sélectionner un fichier texte :
-                    </label>
+﻿<div class="row">
+
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Challenge 1</h2>
+                <p class="card-text">
+                    @using (Html.BeginForm("countNamesWithAtLeastTwoVowels", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken();
+                        <label for="fileInput">
+                            Sélectionner un fichier texte :
+                        </label>
+                        <br />
+                        <input type="file" name="fileInput" accept=".txt" />
+                        <br />
+                        <input type="submit" value="Trier" class="form-control" />
+                    }
                     <br />
-                    <input type="file" name="fileInput" accept=".txt" />
+                    @TempData["FirstMessage"]
+                    @TempData["downloadError"]
                     <br />
-                    <input type="submit" value="Trier" class="form-control" />
-                }
-                <br />
-                <p>@TempData["FirstMessage"]</p>
-                <p>@TempData["downloadError"]</p>
-                <br />
-                <a href="@Url.Action("downloadFile", "Home")" class="col-8">Télécharger le dernier fichier traité</a>
+                    <a href="@Url.Action("downloadFile", "Home")" class="col-8">Télécharger le dernier fichier traité</a>
+                </p>
             </div>
         </div>
     </div>
-</div>
-<div class="col-md-6">
-    <div class="card">
-        <h3 class="card-header">Challenge 2</h3>
-        <div class="card-body">
-            <div class="container">
-                @using (Html.BeginForm("calculateScore", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken();
-                    <label for="fileInput">
-                        Sélectionner un fichier texte :
-                    </label>
+
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Challenge 2</h2>
+                <p>
+                    @using (Html.BeginForm("calculateScore", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken();
+                        <label for="fileInput">
+                            Sélectionner un fichier texte :
+                        </label>
+                        <br />
+                        <input type="file" name="fileInput" accept=".txt" class="" />
+                        <br />
+                        <input type="submit" value="Calculer score" class="form-control" />
+                    }
                     <br />
-                    <input type="file" name="fileInput" accept=".txt" class="" />
-                    <br />
-                    <input type="submit" value="Calculer score" class="form-control" />
-                }
-                <br />
-                <p>@TempData["SecondMessage"]</p>
+                    @TempData["SecondMessage"]
+                </p>
             </div>
         </div>
     </div>
+
 </div>

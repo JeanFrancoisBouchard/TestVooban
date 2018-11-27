@@ -47,7 +47,6 @@ namespace test_vooban.Controllers
 
                 if (lstNames.Count() > 0)
                 {
-                    string test = Server.MapPath("~");
                     StreamWriter sw = new StreamWriter(Server.MapPath("~") + @"\sortedNames.txt");
                     foreach (string line in lstNames)
                     {
@@ -61,7 +60,6 @@ namespace test_vooban.Controllers
             {
                 TempData["FirstMessage"] = "Aucun fichier selectionné.";
             }
-
             return RedirectToAction("Index");
         }
 
@@ -82,7 +80,6 @@ namespace test_vooban.Controllers
             {
                 TempData["downloadError"] = "Le fichier doit être traité avant d'être téléchargé";
             }
-
             return RedirectToAction("Index");
         }
 
@@ -122,7 +119,6 @@ namespace test_vooban.Controllers
             {
                 TempData["SecondMessage"] = "Aucun fichier selectionné.";
             }
-
             return RedirectToAction("Index");
         }
     }
