@@ -26,38 +26,45 @@ namespace test_vooban.Controllers
 
             if (fileInput != null && fileInput.ContentLength > 0)
             {
-                using (StreamReader sr = new StreamReader(fileInput.InputStream))
+                try
                 {
-                    while (!sr.EndOfStream)
+                    using (StreamReader sr = new StreamReader(fileInput.InputStream))
                     {
-                        nameEntry = sr.ReadLine();
-                        foreach (char c in nameEntry)
+                        while (!sr.EndOfStream)
                         {
-                            if (vowels.Contains(Char.ToUpper(c)))
+                            nameEntry = sr.ReadLine();
+                            foreach (char c in nameEntry)
                             {
-                                vowelCount++;
+                                if (vowels.Contains(Char.ToUpper(c)))
+                                {
+                                    vowelCount++;
+                                }
+                            }
+                            if (vowelCount % 2 == 0)
+                            {
+                                lstNames.Add(nameEntry);
+                            }
+                            vowelCount = 0;
+                        }
+                    }
+
+                    if (lstNames.Count() > 0)
+                    {
+                        using (StreamWriter sw = new StreamWriter(Server.MapPath("~") + @"\sortedNames.txt"))
+                        {
+                            lstNames.Sort();
+
+                            foreach (string line in lstNames)
+                            {
+                                sw.WriteLine(line);
                             }
                         }
-                        if (vowelCount % 2 == 0)
-                        {
-                            lstNames.Add(nameEntry);
-                        }
-                        vowelCount = 0;
+                        TempData["FirstMessage"] = String.Format("{0} noms ont été enregistrés.", lstNames.Count);
                     }
                 }
-
-                if (lstNames.Count() > 0)
+                catch(Exception e)
                 {
-                    using (StreamWriter sw = new StreamWriter(Server.MapPath("~") + @"\sortedNames.txt"))
-                    {
-                        lstNames.Sort();
-
-                        foreach (string line in lstNames)
-                        {
-                            sw.WriteLine(line);
-                        }
-                    }
-                    TempData["FirstMessage"] = String.Format("{0} noms ont été enregistrés.", lstNames.Count);
+                    TempData["FirstMessage"] = "Erreur dans la lecture ou l'écriture du fichier";
                 }
             }
             else
@@ -97,29 +104,36 @@ namespace test_vooban.Controllers
 
             if (fileInput != null && fileInput.ContentLength > 0)
             {
-                using (StreamReader sr = new StreamReader(fileInput.InputStream))
+                try
                 {
-                    while (!sr.EndOfStream)
+                    using (StreamReader sr = new StreamReader(fileInput.InputStream))
                     {
-                        inputCharacter = (char)sr.Read();
-                        if (inputCharacter == '(')
+                        while (!sr.EndOfStream)
                         {
-                            score++;
-                        }
-                        else if (inputCharacter == ')')
-                        {
-                            score--;
-                        }
+                            inputCharacter = (char)sr.Read();
+                            if (inputCharacter == '(')
+                            {
+                                score++;
+                            }
+                            else if (inputCharacter == ')')
+                            {
+                                score--;
+                            }
 
-                        if (!negativeScoreReached && score == -1)
-                        {
-                            negativeScoreReached = true;
-                            negativeScoreIndex = index;
+                            if (!negativeScoreReached && score == -1)
+                            {
+                                negativeScoreReached = true;
+                                negativeScoreIndex = index;
+                            }
+                            index++;
                         }
-                        index++;
                     }
+                    TempData["SecondMessage"] = String.Format("Score final : {0}. Position du premier score négatif : {1}", score, negativeScoreIndex > 0 ? negativeScoreIndex.ToString() : "Aucun");
                 }
-                TempData["SecondMessage"] = String.Format("Score final : {0}. Position du premier score négatif : {1}", score, negativeScoreIndex > 0 ? negativeScoreIndex.ToString() : "Aucun");
+                catch(Exception e)
+                {
+                    TempData["SecondMessage"] = "Erreur lors de l'ouverture du fichier";
+                }
             }
             else
             {
