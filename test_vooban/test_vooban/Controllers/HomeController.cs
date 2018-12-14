@@ -32,12 +32,12 @@ namespace test_vooban.Controllers
                     nameEntry = sr.ReadLine();
                     foreach (char c in nameEntry)
                     {
-                        if (vowels.Contains(c))
+                        if (vowels.Contains(Char.ToUpper(c)))
                         {
                             vowelCount++;
                         }
                     }
-                    if (vowelCount >= 2)
+                    if (vowelCount % 2 == 0)
                     {
                         lstNames.Add(nameEntry);
                     }
@@ -48,6 +48,8 @@ namespace test_vooban.Controllers
                 if (lstNames.Count() > 0)
                 {
                     StreamWriter sw = new StreamWriter(Server.MapPath("~") + @"\sortedNames.txt");
+                    lstNames.Sort();
+
                     foreach (string line in lstNames)
                     {
                         sw.WriteLine(line);
